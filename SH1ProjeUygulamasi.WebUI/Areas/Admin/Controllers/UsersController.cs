@@ -4,53 +4,48 @@ using Microsoft.AspNetCore.Mvc;
 using SH1ProjeUygulamasi.Core.Entities;
 using SH1ProjeUygulamasi.Data;
 using SH1ProjeUygulamasi.WebUI.Tools;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 {
 	[Authorize]
 	[Area("Admin")]
-	public class CategoriesController : Controller
+	public class UsersController : Controller
 	{
 		private readonly DatabaseContext _context;
 
-		public CategoriesController(DatabaseContext context)
+		public UsersController(DatabaseContext context)
 		{
 			_context = context;
 		}
 
-		// GET: CategoriesController
+		// GET: UsersController
 		public ActionResult Index()
 		{
-			return View(_context.Categories);
+			return View(_context.Users);
 		}
 
-		// GET: CategoriesController/Details/5
+		// GET: UsersController/Details/5
 		public ActionResult Details(int id)
 		{
 			return View(_context.Categories.Find(id));
 		}
 
-		// GET: CategoriesController/Create
+		// GET: UsersController/Create
 		public ActionResult Create()
 		{
 			return View();
 		}
 
-		// POST: CategoriesController/Create
+		// POST: UsersController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create(Category collection, IFormFile? Image)
+		public ActionResult Create(User collection)
 		{
 			if (!ModelState.IsValid)
 				return View(collection);
 			try
 			{
-				if (Image is not null)
-				{
-					collection.Image = FileHelper.FileLoader(Image);
-				}
-				_context.Categories.Add(collection);
+				_context.Users.Add(collection);
 				_context.SaveChanges();
 				return RedirectToAction(nameof(Index));
 			}
@@ -61,26 +56,22 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 			return View(collection);
 		}
 
-		// GET: CategoriesController/Edit/5
+		// GET: UsersController/Edit/5
 		public ActionResult Edit(int id)
 		{
 			return View(_context.Categories.Find(id));
 		}
 
-		// POST: CategoriesController/Edit/5
+		// POST: UsersController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit(int id, Category collection, IFormFile? Image)
+		public ActionResult Edit(int id, User collection)
 		{
 			if (ModelState.IsValid)
 			{
 				try
 				{
-					if (Image is not null)
-					{
-						collection.Image = FileHelper.FileLoader(Image);
-					}
-					_context.Categories.Update(collection);
+					_context.Users.Update(collection);
 					_context.SaveChanges();
 					return RedirectToAction(nameof(Index));
 				}
@@ -92,20 +83,20 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 			return View(collection);
 		}
 
-		// GET: CategoriesController/Delete/5
+		// GET: UsersController/Delete/5
 		public ActionResult Delete(int id)
 		{
 			return View(_context.Categories.Find(id));
 		}
 
-		// POST: CategoriesController/Delete/5
+		// POST: UsersController/Delete/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, Category collection)
+		public ActionResult Delete(int id, IFormCollection collection)
 		{
 			try
 			{
-				_context.Categories.Remove(collection);
+				//_context.Users.Remove(collection);
 				_context.SaveChanges();
 				return RedirectToAction(nameof(Index));
 			}

@@ -1,6 +1,4 @@
-﻿using static System.Net.Mime.MediaTypeNames;
-
-namespace SH1ProjeUygulamasi.WebUI.Tools
+﻿namespace SH1ProjeUygulamasi.WebUI.Tools
 {
 	public class FileHelper
 	{

@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SH1ProjeUygulamasi.Core.Entities;
 using SH1ProjeUygulamasi.Data;
 
 namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 {
+	[Authorize]
 	[Area("Admin")]
 	public class SlidersController : Controller
 	{

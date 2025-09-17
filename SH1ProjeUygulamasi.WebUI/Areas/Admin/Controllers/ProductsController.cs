@@ -1,46 +1,49 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SH1ProjeUygulamasi.Core.Entities;
 using SH1ProjeUygulamasi.Data;
 using SH1ProjeUygulamasi.WebUI.Tools;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 {
 	[Authorize]
 	[Area("Admin")]
-	public class CategoriesController : Controller
+	public class ProductsController : Controller
 	{
 		private readonly DatabaseContext _context;
 
-		public CategoriesController(DatabaseContext context)
+		public ProductsController(DatabaseContext context)
 		{
 			_context = context;
 		}
 
-		// GET: CategoriesController
+		// GET: ProductsController
 		public ActionResult Index()
 		{
-			return View(_context.Categories);
+			//return View(_context.Products.Include("Category")); //categori ismi yazdırmak için listede join işlemi yapıldı 1.yol
+			return View(_context.Products.Include(c=>c.Category)); //2.yol
 		}
 
-		// GET: CategoriesController/Details/5
+		// GET: ProductsController/Details/5
 		public ActionResult Details(int id)
 		{
-			return View(_context.Categories.Find(id));
+			return View(_context.Products.Find(id));
 		}
 
-		// GET: CategoriesController/Create
+		// GET: ProductsController/Create
 		public ActionResult Create()
 		{
+			ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Name"); //dropdown için kategorileri getir
 			return View();
 		}
 
-		// POST: CategoriesController/Create
+		// POST: ProductsController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Create(Category collection, IFormFile? Image)
+		public ActionResult Create(Product collection, IFormFile? Image)
 		{
 			if (!ModelState.IsValid)
 				return View(collection);
@@ -50,7 +53,7 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 				{
 					collection.Image = FileHelper.FileLoader(Image);
 				}
-				_context.Categories.Add(collection);
+				_context.Products.Add(collection);
 				_context.SaveChanges();
 				return RedirectToAction(nameof(Index));
 			}
@@ -58,19 +61,21 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 			{
 				ModelState.AddModelError("", "Hata Oluştu!");
 			}
+			ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Name"); //get metodunda dönen meton post olunca boş dönmemesi için burada tekrarlıyoruz
 			return View(collection);
 		}
 
-		// GET: CategoriesController/Edit/5
+		// GET: ProductsController/Edit/5
 		public ActionResult Edit(int id)
 		{
-			return View(_context.Categories.Find(id));
+			ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Name");
+			return View(_context.Products.Find(id));
 		}
 
-		// POST: CategoriesController/Edit/5
+		// POST: ProductsController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit(int id, Category collection, IFormFile? Image)
+		public ActionResult Edit(int id, Product collection, IFormFile? Image)
 		{
 			if (ModelState.IsValid)
 			{
@@ -80,7 +85,7 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 					{
 						collection.Image = FileHelper.FileLoader(Image);
 					}
-					_context.Categories.Update(collection);
+					_context.Products.Update(collection);
 					_context.SaveChanges();
 					return RedirectToAction(nameof(Index));
 				}
@@ -89,23 +94,24 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 					ModelState.AddModelError("", "Hata Oluştu!");
 				}
 			}
+			ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Name");
 			return View(collection);
 		}
 
-		// GET: CategoriesController/Delete/5
+		// GET: ProductsController/Delete/5
 		public ActionResult Delete(int id)
 		{
-			return View(_context.Categories.Find(id));
+			return View(_context.Products.Find(id));
 		}
 
-		// POST: CategoriesController/Delete/5
+		// POST: ProductsController/Delete/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, Category collection)
+		public ActionResult Delete(int id, Product collection, IFormFile? Image)
 		{
 			try
 			{
-				_context.Categories.Remove(collection);
+				_context.Products.Remove(collection);
 				_context.SaveChanges();
 				return RedirectToAction(nameof(Index));
 			}
