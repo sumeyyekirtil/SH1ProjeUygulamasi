@@ -34,11 +34,14 @@
                         </li>
                     </ul>
                 </div>
+                <a class="btn-outline-info me-2" href="/" asp-action="Index" target="_blank">Siteyi Görüntüle</a>
+                <a class="btn btn-danger" asp-area="" asp-controller="Account" asp-action="LogOut">Oturumu Kapat</a>
             </div>
         </nav>
     </header>
     <div class="container">
         <main role="main" class="pb-3">
+            @Html.Raw(TempData["Message"])
             @RenderBody()
         </main>
     </div>
