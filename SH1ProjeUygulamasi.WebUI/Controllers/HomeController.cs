@@ -10,20 +10,22 @@ namespace SH1ProjeUygulamasi.WebUI.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly DatabaseContext _context; //add parameters
+        private readonly DatabaseContext _context;
 
-		public HomeController(ILogger<HomeController> logger, DatabaseContext context)
+		public HomeController(DatabaseContext context)
 		{
-			_logger = logger;
 			_context = context;
 		}
 
-		public IActionResult Index(int id, Slider slider)
+		public IActionResult Index()
         {
-            return View(_context.Sliders.Find(id));
+            var model = new HomePageViewModel
+            {
+                Sliders = _context.Sliders.ToList(),
+                Products = _context.Products.Where(p => p.IsActive && p.IsHome).ToList()
+            };
+			return View(model); //toList eklenmez ise foreach döngüsünde liste olmadýðý için çýktý vermez -> alýnan hata Invalid DbSet1 hatasýdýr
         }
-
 
         public IActionResult Privacy()
         {

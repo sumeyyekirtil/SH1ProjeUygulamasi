@@ -1,15 +1,18 @@
-﻿
-<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+﻿@model HomePageViewModel
+
+<div id="carouselExampleAutoplaying" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="~/Images/@Html.ActionLink("Home", "Index", "Home")" class="d-block w-100" alt="@Html.Name">
-        </div>
-        <div class="carousel-item">
-            <img src="~/Images/@Html.Id" class="d-block w-100" alt="@Html.Name">
-        </div>
-        <div class="carousel-item">
-            <img src="~/Images/@Html.Id" class="d-block w-100" alt="@Html.Name">
-        </div>
+
+        @foreach (var item in Model.Sliders)
+        {
+            <div class="carousel-item @(item == Model.Sliders.FirstOrDefault() ? "active" : "")">
+                <img src="~/Images/@item.Image" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>@item.Title</h5>
+                    <p>@item.Description</p>
+                </div>
+            </div>
+        }
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -19,4 +22,16 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">İleri</span>
     </button>
-    </div>
+</div>
+
+<h1 class="display-4 text-center mt-5">
+    Ürünlerimiz
+</h1>
+<div class="row row-cols-3">
+    @foreach (var item in Model.Products)
+    {
+            <div class="col">
+                <img src="~/Images/@item.Image" alt="@item.Name" />
+            </div>
+    }
+</div>

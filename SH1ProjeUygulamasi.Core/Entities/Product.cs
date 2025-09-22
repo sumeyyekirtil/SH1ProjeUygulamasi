@@ -15,6 +15,9 @@ namespace SH1ProjeUygulamasi.Core.Entities
 		public DateTime CreateDate { get; set; } = DateTime.Now;
 		[Display(Name = "Durum")]
 		public bool IsActive { get; set; }
+		
+		[Display(Name = "Anasayfa")]
+		public bool IsHome { get; set; }
 		[Display(Name = "Stok")]
 		public int Stock { get; set; }
 		[Display(Name = "Fiyat")]
