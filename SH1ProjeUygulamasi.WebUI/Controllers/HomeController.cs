@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SH1ProjeUygulamasi.Core.Entities;
+using SH1ProjeUygulamasi.Data;
 using SH1ProjeUygulamasi.WebUI.Models;
 
 namespace SH1ProjeUygulamasi.WebUI.Controllers
@@ -9,16 +11,19 @@ namespace SH1ProjeUygulamasi.WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DatabaseContext _context; //add parameters
 
-        public HomeController(ILogger<HomeController> logger)
+		public HomeController(ILogger<HomeController> logger, DatabaseContext context)
+		{
+			_logger = logger;
+			_context = context;
+		}
+
+		public IActionResult Index(int id, Slider slider)
         {
-            _logger = logger;
+            return View(_context.Sliders.Find(id));
         }
 
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         public IActionResult Privacy()
         {
