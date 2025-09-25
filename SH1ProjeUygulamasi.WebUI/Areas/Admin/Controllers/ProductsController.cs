@@ -75,12 +75,17 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 		// POST: ProductsController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit(int id, Product collection, IFormFile? Image)
+		public ActionResult Edit(int id, Product collection, IFormFile? Image, bool resmiSil)
 		{
 			if (ModelState.IsValid)
 			{
 				try
 				{
+					if (resmiSil == true)
+					{
+						FileHelper.FileRemover(collection.Image); //resmi db silmek için
+						collection.Image = string.Empty;
+					}
 					if (Image is not null)
 					{
 						collection.Image = FileHelper.FileLoader(Image);
@@ -111,6 +116,8 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 		{
 			try
 			{
+				if (!string.IsNullOrEmpty(collection.Image)) //tekli işlemde gerek yok
+					FileHelper.FileRemover(collection.Image);
 				_context.Products.Remove(collection);
 				_context.SaveChanges();
 				return RedirectToAction(nameof(Index));

@@ -27,11 +27,6 @@ namespace SH1ProjeUygulamasi.WebUI.Controllers
 
 			return View();
 		}
-		public IActionResult ContactUs(string nameSurname, string email, string message)
-		{
-
-			return View();
-		}
 
 
 		[HttpPost]

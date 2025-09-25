@@ -26,6 +26,7 @@ namespace SH1ProjeUygulamasi.Core.Entities
 		public int CategoryId { get; set; }
 		[Display(Name = "Kategori")]
 		public Category? Category { get; set; } //navigation property
+		public IList<ProductImage>? ProductImages { get; set; } //bir ürünün birden fazla resmi olabilir - olmayabilir?
 
 	}
 }

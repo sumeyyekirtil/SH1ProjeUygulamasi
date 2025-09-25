@@ -13,5 +13,17 @@
 
 			return dosyaAdi;
 		}
+
+		public static bool FileRemover(string fileName, string klasorYolu = "/wwwroot/Images/")
+		{
+			string klasor = Directory.GetCurrentDirectory() + klasorYolu + fileName;
+			if (File.Exists(klasor)) //eğer sunucuda dosya varsa
+			{
+				File.Delete(klasor); //dosyayı sil
+				return true; //silme başarılı
+			}
+			return false;
+		}
+		
 	}
 }
