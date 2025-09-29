@@ -50,7 +50,7 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
         public IActionResult Create()
         {
             ViewBag.ProductId = new SelectList(_context.Products, "Id", "Name");
-			return View();
+            return View();
         }
 
         // POST: Admin/ProductImages/Create
@@ -60,15 +60,13 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductImage productImage, IFormFile? Name)
         {
-			if (Name is not null)
-				productImage.Name = FileHelper.FileLoader(Name);
-			_context.Add(productImage);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-			ViewBag.ProductId = new SelectList(_context.Products, "Id", "Name");
-			return View(productImage);
+            if (Name is not null)
+                productImage.Name = FileHelper.FileLoader(Name);
+            _context.Add(productImage);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
+    
 
         // GET: Admin/ProductImages/Edit/5
         public async Task<IActionResult> Edit(int? id)

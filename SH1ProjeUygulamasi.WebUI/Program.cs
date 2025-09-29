@@ -1,5 +1,7 @@
 using SH1ProjeUygulamasi.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using SH1ProjeUygulamasi.Service.Abstract;
+using SH1ProjeUygulamasi.Service.Concrete;
 
 namespace SH1ProjeUygulamasi.WebUI
 {
@@ -12,9 +14,21 @@ namespace SH1ProjeUygulamasi.WebUI
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddDbContext<DatabaseContext>(); //uygulamayý cs dosyasýna ekledik baðlantý adresi için
+          builder.Services.AddDbContext<DatabaseContext>(); //uygulamayý cs dosyasýna ekledik baðlantý adresi için
 
-            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            builder.Services.AddScoped<ICategoryService, CategoryService>(); //add scoped ile uygulamaya ICategoryService i kullanma isteði gelirse CategoryService sýnýfýndan bir nesne oluþtur ve onu kullan.
+
+			//birden fazla kez kullanýlan servisler için istek baþýna bir kez nesne oluþturduðundan kaynaklarý daha verimli kullanýr. AddTransient ise tamamen stateless iþlemler için mükemmeldir, çünkü her seferinde yeni bir nesne oluþturulmasý gerekiyorsa, bu yaklaþým en iyi performansý saðlar.
+			//Dependencies inverces Dependencies inverces 
+
+			//diðer services ekleme yollarý
+			//builder.Services.AddSingleton<ICategoryService, CategoryService>(); //bir sýnýfýn uygulama boyunca tek bir instance (örnek) ile kullanýlmasýný saðlar. Yani uygulama baþladýðýnda bir instance oluþturulur ve bu instance, uygulama kapanana kadar ayný kalýr. Bu, özellikle paylaþýlan veri ya da ayarlarýn kullanýldýðý yerlerde kullanýþlýdýr.
+
+			//builder.Services.AddTransient<ICategoryService, CategoryService>(); //her talep edildiðinde yeni bir instance oluþturur. Yani bir sýnýf, uygulamanýn herhangi bir yerinde çaðrýldýðýnda her seferinde yepyeni bir nesne oluþturulup kullanýlýr. Bu, hafif ve kýsa ömürlü nesneler için idealdir.
+			builder.Services.AddTransient<IProductService, ProductService>(); //Servisi tanýtmazsak hata alýp eþleþme için resolve çýktý verir bulamaz !!!
+
+
+			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
             var app = builder.Build();
 
