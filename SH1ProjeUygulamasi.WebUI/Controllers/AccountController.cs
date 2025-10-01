@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SH1ProjeUygulamasi.Core.Entities;
 using SH1ProjeUygulamasi.Data;
+using SH1ProjeUygulamasi.Service.Abstract;
 using System.Drawing;
 using System.Security.Claims;
 
@@ -10,11 +11,18 @@ namespace SH1ProjeUygulamasi.WebUI.Controllers
 {
 	public class AccountController : Controller
 	{
-		private readonly DatabaseContext _context;
+		//private readonly DatabaseContext _context;
 
-		public AccountController(DatabaseContext context)
+		//public AccountController(DatabaseContext context)
+		//{
+		//	_context = context;
+		//}
+
+		private readonly IUserService _userService;
+
+		public AccountController(IUserService userService)
 		{
-			_context = context;
+			_userService = userService;
 		}
 
 		public IActionResult Index()
@@ -33,14 +41,15 @@ namespace SH1ProjeUygulamasi.WebUI.Controllers
 		public IActionResult Login(string email, string password)
 		{
 			// Kullanıcı doğrulama işlemleri burada yapılacak (veritabanı kontrolü)
-			var user = _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
+			//var user = _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
+			var user = _userService.GetUser(u => u.Email == email && u.Password == password);
 			if (user != null)
 			{
 				// Giriş başarılı, kullanıcıyı yönlendir
 				var haklar = new List<Claim>() //kullanıcı hakları tanımladık
 				{
 					new(ClaimTypes.Email, user.Email), //claim = hak (kullanıcıya tanımlanan haklar)
-						new(ClaimTypes.Role, "Admin")
+						new(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User") //giriş yapan kullanıcı admin yetkisiyle değilse user yetkisiyle giriş yapsın.
 				};
 				var kullaniciKimligi = new ClaimsIdentity(haklar, "Login"); //kullanıcı için bir kimlik oluşturduk
 				ClaimsPrincipal claimsPrincipal = new(kullaniciKimligi); //bu sınıftan bir nesne oluşturup bilgilerde saklı haklar ile kural oluşturulabilir
@@ -66,6 +75,11 @@ namespace SH1ProjeUygulamasi.WebUI.Controllers
 		{
 			return View();
 		}
+		
+		public IActionResult AccessDenied() //varsayılan metod yolu açtık
+		{
+			return View();
+		}
 
 		[HttpPost]
 		public IActionResult Register(User user)
@@ -76,8 +90,10 @@ namespace SH1ProjeUygulamasi.WebUI.Controllers
 				{
 					user.IsActive = true;
 					user.IsAdmin = false;
-					_context.Users.Add(user);
-					_context.SaveChanges();
+					//_context.Users.Add(user);
+					//_context.SaveChanges();
+					_userService.AddUser(user);
+					_userService.Save();
 					TempData["Message"] = @"<div class=""alert alert-success alert-dismissible fade show"" role=""alert"">
                      <strong>Kayıt İşlemi Başarılı! Giriş Yapabilirsiniz.!</strong>
                      <button type=""button"" class=""btn-close"" data-bs-dismiss=""alert"" aria-label=""Close""></button>

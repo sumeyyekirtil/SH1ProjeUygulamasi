@@ -8,7 +8,8 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 {
-	[Authorize]
+	//[Authorize] Düzgün kullanım
+	[Authorize(Policy = "AdminPolicy")] //Rol yetkilendirmeli kullanım: sadece admin yetkisi ile giriş yapanlar bu ekranlara erişsin.
 	[Area("Admin")]
 	public class CategoriesController : Controller
 	{

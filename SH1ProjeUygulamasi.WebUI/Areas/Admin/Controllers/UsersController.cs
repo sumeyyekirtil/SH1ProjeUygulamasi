@@ -7,7 +7,8 @@ using SH1ProjeUygulamasi.WebUI.Tools;
 
 namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 {
-	[Authorize]
+	[Authorize(Policy = "AdminPolicy")] //Rol yetkilendirmeli kullanım: sadece admin yetkisi ile giriş yapanlar bu ekranlara erişsin.
+	//[Authorize]
 	[Area("Admin")]
 	public class UsersController : Controller
 	{

@@ -2,6 +2,7 @@ using SH1ProjeUygulamasi.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using SH1ProjeUygulamasi.Service.Abstract;
 using SH1ProjeUygulamasi.Service.Concrete;
+using System.Security.Claims;
 
 namespace SH1ProjeUygulamasi.WebUI
 {
@@ -27,8 +28,21 @@ namespace SH1ProjeUygulamasi.WebUI
 			//builder.Services.AddTransient<ICategoryService, CategoryService>(); //her talep edildiðinde yeni bir instance oluþturur. Yani bir sýnýf, uygulamanýn herhangi bir yerinde çaðrýldýðýnda her seferinde yepyeni bir nesne oluþturulup kullanýlýr. Bu, hafif ve kýsa ömürlü nesneler için idealdir.
 			builder.Services.AddTransient<IProductService, ProductService>(); //Servisi tanýtmazsak hata alýp eþleþme için resolve çýktý verir bulamaz !!!
 
+			builder.Services.AddScoped<IUserService, UserService>();
+			
+            builder.Services.AddScoped(typeof(IService<>), typeof (Service<>)); //Generic Service
 
-			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(); //oturum açma
+
+            //altýnda olmalý
+            //Authorization: Yetkilendirme: once servis olarak ekliyoruz
+            builder.Services.AddAuthorization(x =>
+            {
+                x.AddPolicy("AdminPolicy", policy => policy.RequireClaim(ClaimTypes.Role, "Admin")); //bundan sonra controller lara policy belirtmeliyiz
+                x.AddPolicy("UserPolicy", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "User"));
+            });
+
 
             var app = builder.Build();
 
