@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SH1ProjeUygulamasi.Data", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SH1ProjeUygulamasi.Service", "SH1ProjeUygulamasi.Service\SH1ProjeUygulamasi.Service.csproj", "{02969403-0DC0-410D-B830-EDF86BD0606D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SH1ProjeUygulamasi.WebAPI", "SH1ProjeUygulamasi.WebAPI\SH1ProjeUygulamasi.WebAPI.csproj", "{4510054C-431F-48C8-AFCD-7DEF1383196A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{02969403-0DC0-410D-B830-EDF86BD0606D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02969403-0DC0-410D-B830-EDF86BD0606D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02969403-0DC0-410D-B830-EDF86BD0606D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4510054C-431F-48C8-AFCD-7DEF1383196A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4510054C-431F-48C8-AFCD-7DEF1383196A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4510054C-431F-48C8-AFCD-7DEF1383196A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4510054C-431F-48C8-AFCD-7DEF1383196A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
