@@ -35,7 +35,7 @@ namespace SH1ProjeUygulamasi.Data
 					IsAdmin = true,
 					Password = "pass123"
 				}
-				);
+			);
 		}
 	}
 }
