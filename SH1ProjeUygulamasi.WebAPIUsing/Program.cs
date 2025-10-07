@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+
 namespace SH1ProjeUygulamasi.WebAPIUsing
 {
 	public class Program
@@ -9,6 +12,20 @@ namespace SH1ProjeUygulamasi.WebAPIUsing
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
 
+			builder.Services.AddSession();
+
+			builder.Services.AddHttpClient(); // HttpClient ý dependency injection yöntemiyle kullanabilmek ve controller ýn bunu tanýmasý için (mimleme iþini kendisine býrakmamýþ oluyoruz) bu þekilde servisi tanýmlamýþ oluyoruz.
+
+			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(); //oturum açma
+
+			//altýnda olmalý
+			//Authorization: Yetkilendirme: once servis olarak ekliyoruz
+			builder.Services.AddAuthorization(x =>
+			{
+				x.AddPolicy("AdminPolicy", policy => policy.RequireClaim(ClaimTypes.Role, "Admin")); //bundan sonra controller lara policy belirtmeliyiz
+				x.AddPolicy("UserPolicy", policy => policy.RequireClaim(ClaimTypes.Role, "Admin", "User"));
+			});
+
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
@@ -18,6 +35,8 @@ namespace SH1ProjeUygulamasi.WebAPIUsing
 				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
 				app.UseHsts();
 			}
+
+			app.UseSession(); //session kullanmak için
 
 			app.UseHttpsRedirection();
 			app.UseRouting();
