@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SH1ProjeUygulamasi.Core.Entities;
+using SH1ProjeUygulamasi.WebAPIUsing.Tools;
+using System.Xml.Linq;
 
 namespace SH1ProjeUygulamasi.WebAPIUsing.Areas.Admin.Controllers
 {
@@ -46,12 +48,14 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Areas.Admin.Controllers
 		// POST: ProductImagesController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> CreateAsync(ProductImage collection)
+		public async Task<ActionResult> CreateAsync(ProductImage collection, IFormFile? Name)
 		{
 			if (ModelState.IsValid)
 			{
 				try
 				{
+					if (Name is not null)
+						collection.Name = FileHelper.FileLoader(Name);
 					var response = await _httpClient.PostAsJsonAsync(_apiAdres, collection);
 					if (response.IsSuccessStatusCode)
 					{
@@ -78,12 +82,14 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Areas.Admin.Controllers
 		// POST: ProductImagesController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> EditAsync(int id, ProductImage collection)
+		public async Task<ActionResult> EditAsync(int id, ProductImage collection, IFormFile? Name)
 		{
 			if (ModelState.IsValid)
 			{
 				try
 				{
+					if (Name is not null)
+						collection.Name = FileHelper.FileLoader(Name);
 					var response = await _httpClient.PutAsJsonAsync(_apiAdres + "/" + id, collection);
 					if (response.IsSuccessStatusCode)
 					{

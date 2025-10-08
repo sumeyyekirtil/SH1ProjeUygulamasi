@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SH1ProjeUygulamasi.Core.Entities;
+using SH1ProjeUygulamasi.WebAPIUsing.Tools;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SH1ProjeUygulamasi.WebAPIUsing.Areas.Admin.Controllers
 {
@@ -39,18 +41,22 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Areas.Admin.Controllers
 		// POST: SlidersController/Create
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> CreateAsync(Slider collection)
+		public async Task<ActionResult> CreateAsync(Slider collection, IFormFile? Image)
 		{
 			if (ModelState.IsValid)
 			{
 				try
 				{
-					var response = await _httpClient.PostAsJsonAsync(_apiAdres, collection);
-					if (response.IsSuccessStatusCode)
+					if (Image is not null)
 					{
-						return RedirectToAction(nameof(Index));
+						collection.Image = FileHelper.FileLoader(Image);
+						var response = await _httpClient.PostAsJsonAsync(_apiAdres, collection);
+						if (response.IsSuccessStatusCode)
+						{
+							return RedirectToAction(nameof(Index));
+						}
+						ModelState.AddModelError("", "Kayıt Yapılamadı!");
 					}
-					ModelState.AddModelError("", "Kayıt Yapılamadı!");
 				}
 				catch
 				{
@@ -70,18 +76,22 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Areas.Admin.Controllers
 		// POST: SlidersController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> EditAsync(int id, Slider collection)
+		public async Task<ActionResult> EditAsync(int id, Slider collection, IFormFile? Image)
 		{
 			if (ModelState.IsValid)
 			{
 				try
 				{
-					var response = await _httpClient.PutAsJsonAsync(_apiAdres + "/" + id, collection);
-					if (response.IsSuccessStatusCode)
+					if (Image is not null)
 					{
-						return RedirectToAction(nameof(Index));
+						collection.Image = FileHelper.FileLoader(Image);
+						var response = await _httpClient.PutAsJsonAsync(_apiAdres + "/" + id, collection);
+						if (response.IsSuccessStatusCode)
+						{
+							return RedirectToAction(nameof(Index));
+						}
+						ModelState.AddModelError("", "Kayıt Yapılamadı!");
 					}
-					ModelState.AddModelError("", "Kayıt Yapılamadı!");
 				}
 				catch
 				{
@@ -105,6 +115,8 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Areas.Admin.Controllers
 		{
 			try
 			{
+				if (!string.IsNullOrEmpty(collection.Image)) //tekli işlemde gerek yok
+					FileHelper.FileRemover(collection.Image);
 				var response = await _httpClient.DeleteAsync(_apiAdres);
 				if (response.IsSuccessStatusCode)
 				{
