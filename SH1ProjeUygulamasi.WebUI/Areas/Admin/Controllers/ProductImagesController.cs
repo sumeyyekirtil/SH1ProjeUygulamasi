@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SH1ProjeUygulamasi.Core.Entities;
@@ -12,6 +13,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 {
+    [Authorize]
     [Area("Admin")]
     public class ProductImagesController : Controller
     {
@@ -29,7 +31,7 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
         }
 
         // GET: Admin/ProductImages/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> DetailsAsync(int? id)
         {
             if (id == null)
             {
@@ -58,7 +60,7 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProductImage productImage, IFormFile? Name)
+        public async Task<IActionResult> CreateAsync(ProductImage productImage, IFormFile? Name)
         {
             if (Name is not null)
                 productImage.Name = FileHelper.FileLoader(Name);
@@ -69,7 +71,7 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
     
 
         // GET: Admin/ProductImages/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditAsync(int? id)
         {
             if (id == null)
             {
@@ -89,7 +91,7 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductId,Name")] ProductImage productImage, IFormFile? Name)
+        public async Task<IActionResult> EditAsync(int id, [Bind("Id,ProductId,Name")] ProductImage productImage, IFormFile? Name)
         {
             if (id != productImage.Id)
             {
@@ -120,7 +122,7 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
         }
 
         // GET: Admin/ProductImages/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> DeleteAsync(int? id)
         {
             if (id == null)
             {
@@ -140,7 +142,7 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
         // POST: Admin/ProductImages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             var productImage = await _context.ProductImages.FindAsync(id);
             if (productImage != null)

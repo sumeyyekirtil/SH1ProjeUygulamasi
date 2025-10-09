@@ -93,11 +93,11 @@ namespace SH1ProjeUygulamasi.WebUI.Areas.Admin.Controllers
 		// POST: UsersController/Delete/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, IFormCollection collection)
+		public ActionResult Delete(int id, User collection)
 		{
 			try
 			{
-				//_context.Users.Remove(collection);
+				_context.Users.Remove(collection);
 				_context.SaveChanges();
 				return RedirectToAction(nameof(Index));
 			}
