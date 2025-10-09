@@ -41,6 +41,13 @@ namespace SH1ProjeUygulamasi.WebAPI.Controllers
 			return Ok(model);
 		}
 
+		[HttpGet("GetProductImagesByProductId/{id}")]
+		public async Task<IEnumerable<ProductImage>> GetProductImagesByProductId(int id)
+		{
+			//başka sayfada eksiltili çağıracağımız farklı seçimli metot yazılır
+			return await _service.GetAllAsync(p => p.ProductId == id);
+		}
+
 		// POST api/<ProductImagesController>
 		[HttpPost]
 		public async Task<ActionResult<ProductImage>> PostAsync([FromBody] ProductImage value)

@@ -24,6 +24,26 @@ namespace SH1ProjeUygulamasi.WebAPI.Controllers
 		{
 			return await _service.GetAllAsync();
 		}
+		[HttpGet("GetHomePageProducts")]
+		public async Task<IEnumerable<Product>> GetHomePageProducts()
+		{
+			//başka sayfada eksiltili çağıracağımız farklı seçimli metot yazılır
+			return await _service.GetAllAsync(p => p.IsActive && p.IsHome);
+		}
+
+		[HttpGet("GetProductsPageCategoryId/{id}")]
+		public async Task<IEnumerable<Product>> GetProductsPageCategoryId(int id)
+		{
+			//başka sayfada eksiltili çağıracağımız farklı seçimli metot yazılır
+			return await _service.GetAllAsync(p => p.IsActive && p.CategoryId == id);
+		}
+
+		[HttpGet("GetProductsBySearch/{q}")]
+		public async Task<IEnumerable<Product>> GetProductsBySearch(string q)
+		{
+			//başka sayfada eksiltili çağıracağımız farklı seçimli metot yazılır
+			return await _service.GetAllAsync(p => p.IsActive && p.Name.Contains(q));
+		}
 
 		// GET api/<ProductsController>/5
 		[HttpGet("{id}")]
