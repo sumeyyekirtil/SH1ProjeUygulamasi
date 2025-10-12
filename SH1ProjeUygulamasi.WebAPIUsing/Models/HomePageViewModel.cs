@@ -1,6 +1,6 @@
 ﻿using SH1ProjeUygulamasi.Core.Entities;
 
-namespace SH1ProjeUygulamasi.WebUI.Models
+namespace SH1ProjeUygulamasi.WebAPIUsing.Models
 {
 	public class HomePageViewModel
 	{

@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SH1ProjeUygulamasi.Core.Entities;
-using SH1ProjeUygulamasi.Data;
 
 namespace SH1ProjeUygulamasi.WebAPIUsing.ViewComponents
 {

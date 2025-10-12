@@ -22,7 +22,7 @@ namespace SH1ProjeUygulamasi.WebUI
 			builder.Services.AddScoped<ICategoryService, CategoryService>(); //add scoped ile uygulamaya ICategoryService i kullanma isteði gelirse CategoryService sýnýfýndan bir nesne oluþtur ve onu kullan.
 
 			//birden fazla kez kullanýlan servisler için istek baþýna bir kez nesne oluþturduðundan kaynaklarý daha verimli kullanýr. AddTransient ise tamamen stateless iþlemler için mükemmeldir, çünkü her seferinde yeni bir nesne oluþturulmasý gerekiyorsa, bu yaklaþým en iyi performansý saðlar.
-			//Dependencies inverces Dependencies inverces 
+			//Dependencies inverces
 
 			//diðer services ekleme yollarý
 			//builder.Services.AddSingleton<ICategoryService, CategoryService>(); //bir sýnýfýn uygulama boyunca tek bir instance (örnek) ile kullanýlmasýný saðlar. Yani uygulama baþladýðýnda bir instance oluþturulur ve bu instance, uygulama kapanana kadar ayný kalýr. Bu, özellikle paylaþýlan veri ya da ayarlarýn kullanýldýðý yerlerde kullanýþlýdýr.
