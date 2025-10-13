@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using SH1ProjeUygulamasi.Core.Entities;
 using SH1ProjeUygulamasi.WebAPIUsing.Models;
 using SH1ProjeUygulamasi.WebAPIUsing.Tools;
-using SH1ProjeUygulamasi.WebUI.Models;
 using System.Diagnostics;
 
 namespace SH1ProjeUygulamasi.WebAPIUsing.Controllers
