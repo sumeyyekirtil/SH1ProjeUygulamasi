@@ -28,6 +28,9 @@
                 @Html.DisplayNameFor(model => model.IsAdmin)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.CreateDate)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.UserGuid)
             </th>
             <th></th>
@@ -47,6 +50,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsAdmin)

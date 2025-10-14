@@ -26,10 +26,10 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Controllers
 				return NotFound();
 			}
 			var products = await _httpClient.GetFromJsonAsync<List<Product>>($"{_apiAdres}Products/GetProductsPageCategoryId/{id}");
-			if (products is not null)
-			{
-				model.Products = products;
-			}
+			//if (products is not null)
+			//{
+			//	model.Products = products;
+			//}
 			return View(model);
 		}
 	}

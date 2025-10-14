@@ -31,6 +31,20 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Controllers
 		{
 			return View();
 		}
+		
+		public IActionResult JsileAPIKullanimOrnegi()
+		{
+			return View();
+		}
+		
+		public IActionResult Detail(int? id)
+		{
+			if (id is null)
+			{
+				return BadRequest("Geçersiz Ýstek!");
+			}
+			return View();
+		}
 
 		[HttpPost]
 		public IActionResult ContactUs(string nameSurname, string email, string message)

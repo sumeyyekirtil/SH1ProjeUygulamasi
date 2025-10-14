@@ -27,13 +27,13 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Controllers
 				return BadRequest("Geçersiz İstek!");
 			}
 			var products = await _httpClient.GetFromJsonAsync<Product>($"{_apiAdres}Products/{id}");
-			if (model == null)
-			{
-				return NotFound("Ürün Bulunamadı!");
-			}
+			//if (model == null)
+			//{
+			//	return NotFound("Ürün Bulunamadı!");
+			//}
 			var productImages = await _httpClient.GetFromJsonAsync<List<ProductImage>>($"{_apiAdres}ProductImages/GetProductImagesByProductId/{id}");
-			model.ProductImages = productImages;
-			return View(model);
+			//model.ProductImages = productImages;
+			return View();
 		}
 	}
 }

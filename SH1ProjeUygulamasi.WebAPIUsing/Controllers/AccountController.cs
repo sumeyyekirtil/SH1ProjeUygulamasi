@@ -34,30 +34,30 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Controllers
 		{
 			// Kullanıcı doğrulama işlemleri burada yapılacak (veritabanı kontrolü)
 			//var user = _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
-			var sonuc = await _httpClient.PostAsJsonAsync<User>();
-			if (ModelState.IsValid)
-			{
-				var kullanici = await sonuc.Content.ReadFromJsonAsync(_apiAdres + "Login");
-				var user = _userService.GetUser(u => u.Email == email && u.Password == password);
-				if (user != null)
-				{
-					// Giriş başarılı, kullanıcıyı yönlendir
-					var haklar = new List<Claim>() //kullanıcı hakları tanımladık
-				{
-					new(ClaimTypes.Email, user.Email), //claim = hak (kullanıcıya tanımlanan haklar)
-						new(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User") //giriş yapan kullanıcı admin yetkisiyle değilse user yetkisiyle giriş yapsın.
-				};
-					var kullaniciKimligi = new ClaimsIdentity(haklar, "Login"); //kullanıcı için bir kimlik oluşturduk
-					ClaimsPrincipal claimsPrincipal = new(kullaniciKimligi); //bu sınıftan bir nesne oluşturup bilgilerde saklı haklar ile kural oluşturulabilir
-					HttpContext.SignInAsync(claimsPrincipal); //yukarıdaki yetkilerle sisteme giriş yaptık
-					return RedirectToAction("Index", "Home");
-				}
-				else
-				{
-					// Giriş başarısız, hata mesajı göster
-					ModelState.AddModelError("", "Giriş Başarısız!");
-				}
-			}
+			//var sonuc = await _httpClient.PostAsJsonAsync<User>();
+			//if (ModelState.IsValid)
+			//{
+			//	//var kullanici = await sonuc.Content.ReadFromJsonAsync(_apiAdres + "Login");
+			//	//var user = _userService.GetUser(u => u.Email == email && u.Password == password);
+			//	if (user != null)
+			//	{
+			//		// Giriş başarılı, kullanıcıyı yönlendir
+			//		var haklar = new List<Claim>() //kullanıcı hakları tanımladık
+			//	{
+			//		//new(ClaimTypes.Email, user.Email), //claim = hak (kullanıcıya tanımlanan haklar)
+			//			new(ClaimTypes.Role, user.IsAdmin ? "Admin" : "User") //giriş yapan kullanıcı admin yetkisiyle değilse user yetkisiyle giriş yapsın.
+			//	};
+			//		var kullaniciKimligi = new ClaimsIdentity(haklar, "Login"); //kullanıcı için bir kimlik oluşturduk
+			//		ClaimsPrincipal claimsPrincipal = new(kullaniciKimligi); //bu sınıftan bir nesne oluşturup bilgilerde saklı haklar ile kural oluşturulabilir
+			//		HttpContext.SignInAsync(claimsPrincipal); //yukarıdaki yetkilerle sisteme giriş yaptık
+			//		return RedirectToAction("Index", "Home");
+			//	}
+			//	else
+			//	{
+			//		// Giriş başarısız, hata mesajı göster
+			//		ModelState.AddModelError("", "Giriş Başarısız!");
+				//}
+			//}
 			return RedirectToAction("Login", "Account");
 		}
 
