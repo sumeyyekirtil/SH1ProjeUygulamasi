@@ -34,9 +34,15 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Areas.Admin.Controllers
 			return View(model);
 		}
 
-		// GET: ProductsController/Create
-		public async Task<ActionResult> CreateAsync()
+		void Load()
 		{
+			//ViewBag .CategoryId
+		}
+
+		// GET: ProductsController/Create
+		public async Task<ActionResult> Create()
+		{
+			Load();
 			await YukleAsync(); //dropdown için kategorileri getir
 			return View();
 		}
@@ -80,7 +86,7 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Areas.Admin.Controllers
 		// POST: ProductsController/Edit/5
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> EditAsync(int id, Product collection, IFormFile? Image, bool resmiSil)
+		public async Task<ActionResult> Edit(int id, Product collection, IFormFile? Image, bool resmiSil)
 		{
 			if (ModelState.IsValid)
 			{
@@ -147,6 +153,10 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Areas.Admin.Controllers
 		{
 			var kategoriler = await _httpClient.GetFromJsonAsync<List<Category>>(_apiAdres2);
 			ViewBag.CategoryId = new SelectList(kategoriler, "Id", "Name");
+			var markalar = await _httpClient.GetFromJsonAsync<List<Brand>>("http://localhost:5063/Api/Brands);
+			ViewBag.BrandId = new SelectList(markalar, "Id", "Name");
 		}
+
+
 	}
 }

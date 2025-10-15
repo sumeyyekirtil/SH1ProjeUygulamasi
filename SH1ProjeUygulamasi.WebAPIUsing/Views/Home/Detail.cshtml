@@ -18,6 +18,20 @@
             .then(product => {
                  console.log(product);
                  const resimler = product.images;
+                 for (const resim in resimler) {
+                     images.innerHTML += `<div class= "col" <a href= "${resimler[resim]}"><img src="${resimler[resim]}" alt="" class= "img-fluid" /></a></div>`
+                 }
+                 div.innerHTML = `
+                 <div class= "col-md-12">
+                      <h1>"${resimler.title}"</h1>
+                      <h2>"${resimler.category}"</h2>
+                      <h4> Fiyat :"${resimler.price} ₺"</h4>
+                      <div>
+                           ${product.description}
+                      </div>
+                 </div>
+                 
+                 `
             })
     </script>
 }

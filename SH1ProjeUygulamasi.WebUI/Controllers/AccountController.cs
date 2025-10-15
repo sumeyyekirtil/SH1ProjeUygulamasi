@@ -9,6 +9,7 @@ using System.Security.Claims;
 
 namespace SH1ProjeUygulamasi.WebUI.Controllers
 {
+
 	public class AccountController : Controller
 	{
 		//private readonly DatabaseContext _context;

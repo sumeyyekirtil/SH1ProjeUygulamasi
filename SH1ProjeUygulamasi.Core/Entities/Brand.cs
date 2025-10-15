@@ -2,7 +2,7 @@
 
 namespace SH1ProjeUygulamasi.Core.Entities
 {
-	public class Product : IEntity
+	public class Brand : IEntity
 	{
 		public int Id { get; set; }
 		[Display(Name = "Kategori Adı"), StringLength(50), Required(ErrorMessage = "{0} Boş Geçilemez!")]
@@ -10,27 +10,12 @@ namespace SH1ProjeUygulamasi.Core.Entities
 		[Display(Name = "Kategori Açıklama"), DataType(DataType.MultilineText)]
 		public string? Description { get; set; }
 		[Display(Name = "Kategori Resmi"), StringLength(100)]
-		public string? Image { get; set; }
+		public string? Logo { get; set; }
 		[Display(Name = "Eklenme Tarihi"), ScaffoldColumn(false)] //ScaffoldColumn : false sayfa oluştururken bu kolon oluşmasın
 		public DateTime CreateDate { get; set; } = DateTime.Now;
 		[Display(Name = "Durum")]
 		public bool IsActive { get; set; }
-		
-		[Display(Name = "Anasayfa")]
-		public bool IsHome { get; set; }
-		[Display(Name = "Stok")]
-		public int Stock { get; set; }
-		[Display(Name = "Fiyat")]
-		public decimal Price { get; set; }
 		[Display(Name = "Kategori")]
-		public int CategoryId { get; set; }
-		[Display(Name = "Kategori")]
-		public Category? Category { get; set; } //navigation property
-		[Display(Name = "Marka")]
-		public int? BrandId { get; set; }
-		[Display(Name = "Kategori")]
-		public Brand? Brand { get; set; } //navigation property
-		public IList<ProductImage>? ProductImages { get; set; } //bir ürünün birden fazla resmi olabilir - olmayabilir?
-
+		public IList<Product>? Products { get; set; } //1 kategoride 1 den çok ürün olabilir
 	}
 }
