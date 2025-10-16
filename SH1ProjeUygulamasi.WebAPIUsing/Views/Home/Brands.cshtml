@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewData["Title"] = "Marka Yönetimi";
+}
+
+<h1>Marka Yönetimi</h1>
+
+<table class="table table-striped table-hover">
+    <tr>
+        <th>Id</th>
+        <th>Logo</th>
+        <th>Marka Adı</th>
+        <th>Marka Açıklaması</th>
+        <th>Eklenme Tarihi</th>
+        <th></th>
+    </tr>
+    <tbody id="list">
+    </tbody>  @*tablonun gölgesi anlamına gelir*@
+</table>
+
+<input type="hidden" name="Id" />
+<input type="hidden" name="CreateDate" />
+<input type="hidden" name="LogoName" id="LogoName" />
+
+<div class="row">
+    <div class="col-md-4">
+        <div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Logo" class="control-label"></label>
+                <input asp-for="Logo" class="form-control" type="file" />
+                <span asp-validation-for="Logo" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Ekle" class="btn btn-primary"  onclick="Ekle()" />
+                <input type="button" value="Güncelle" class="btn btn-success" onclick="Güncelle()" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var apiUrl = "http://localhost:5036/Api/";
+        funciton GetAll() {
+            fetch(apiUrl + 'Brands')
+                .then(Response => response.json()) //json olarak dönüştür
+                .then(data => {
+                    //console.log(data);
+                    let div = document.getElementById("list");
+                    div.innerHTML = "";
+                    data.forEach(item =>
+                        div.innerHTML += `<tr>
+                                            <td>${item.id}</td>
+                                            <td><img src="/Images/${item.logo}" alt="" height="34" /></td>
+                                            <td>${item.name}</td>
+                                            <td>${item.description}</td>
+                                            <td>${item.createDate}</td>
+                                           <td><button class="btn btn-primary" onclick="alert('Düzenle')">Düzenle</button>
+                                           <button class="btn btn-danger" onclick="alert('Sil')">Sil
+                                           </td>
+                                          </tr>`;
+                    });
+                })
+                catch(error => {
+                    console.log(error)
+                })
+        };
+        GetAll();
+        function Ekle() {
+            //file upload işlemi
+            const formData = new FormData();
+            const fileField = document.querySelector('input[type="file"]');
+
+            formData.append("formFile", fileField.files[0]);
+            fetch(apiUrl + 'Brands/', {
+                method:'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    Name: document.getElementById('Name')[0].value,
+                    Description: document.getElementsByName('Description')[0].value,
+                    Logo: formData.get('formFile').name //getElementById ile yazmanın başka yolu
+                })
+            })
+                .then((response) => {
+                    if (response.ok {
+                        //upload(formData);
+                        location.reload()
+                        //return response.json(); //başarılı ise json verisini alın
+                    }
+                    else{
+                        throw new Error('İstek başarısız oldu.'); //hata durumunda hata fırlatın
+                    }
+                })
+                catch(error => {
+                    console.log(error)
+                })
+        }
+    </script>
+}

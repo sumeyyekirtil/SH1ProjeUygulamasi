@@ -31,6 +31,11 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Controllers
 		{
 			return View();
 		}
+
+		public IActionResult Brands()
+		{
+			return View();
+		}
 		
 		public IActionResult JsileAPIKullanimOrnegi()
 		{

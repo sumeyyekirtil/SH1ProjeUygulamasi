@@ -27,6 +27,14 @@ namespace SH1ProjeUygulamasi.WebAPI
 			// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 			builder.Services.AddOpenApi();
 
+			builder.Services.AddCors(options =>
+			{
+				options.AddPolicy("default", policy =>
+				{
+					policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod(); //cors hatasýna takýlan tüm istekleri kabul et 
+				});
+			});
+
 			var app = builder.Build();
 
 			// Configure the HTTP request pipeline.
@@ -39,6 +47,7 @@ namespace SH1ProjeUygulamasi.WebAPI
 
 			app.UseAuthorization();
 
+			app.UseCors("default");
 
 			app.MapControllers();
 

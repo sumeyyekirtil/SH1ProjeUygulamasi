@@ -153,8 +153,8 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Areas.Admin.Controllers
 		{
 			var kategoriler = await _httpClient.GetFromJsonAsync<List<Category>>(_apiAdres2);
 			ViewBag.CategoryId = new SelectList(kategoriler, "Id", "Name");
-			var markalar = await _httpClient.GetFromJsonAsync<List<Brand>>("http://localhost:5063/Api/Brands);
-			ViewBag.BrandId = new SelectList(markalar, "Id", "Name");
+			//var markalar = await _httpClient.GetFromJsonAsync<List<Brand>>("http://localhost:5063/Api/Brands);
+			//ViewBag.BrandId = new SelectList(markalar, "Id", "Name");
 		}
 
 
