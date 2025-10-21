@@ -35,5 +35,10 @@ namespace SH1ProjeUygulamasi.WebAPIUsing.Controllers
 			//model.ProductImages = productImages;
 			return View();
 		}
+
+		public IActionResult FetchCrud()
+		{
+			return View();
+		}
 	}
 }

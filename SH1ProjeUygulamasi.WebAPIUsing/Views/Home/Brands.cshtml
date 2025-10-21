@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Marka Yönetimi";
 }
 
@@ -46,14 +45,14 @@
                 </label>
             </div>
             <div class="form-group">
-                <input type="button" value="Ekle" class="btn btn-primary"  onclick="Ekle()" />
+                <input type="button" value="Ekle" class="btn btn-primary" onclick="Ekle()" />
                 <input type="button" value="Güncelle" class="btn btn-success" onclick="Güncelle()" />
             </div>
         </div>
     </div>
 </div>
 
-@section scripts{
+@section scripts {
     <script>
         var apiUrl = "http://localhost:5036/Api/";
         funciton GetAll() {
